@@ -1,0 +1,48 @@
+{
+  "name": "@lyufudi/dove-ui-server",
+  "version": "1.0.0",
+  "description": "Almost for Java Platform JSPs",
+  "main": "index.js",
+  "scripts": {
+    "build-limit": "npx webpack --config webpack.limit-browser.js --node-env production && npx webpack --config webpack.limit-browser.js --node-env development",
+    "build-dovepay": "npx webpack --config webpack.dovepay.js --node-env production",
+    "start": "node server",
+    "test": "set NODE_ENV=development&& node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lvfd/dove-ui-server.git"
+  },
+  "keywords": [
+    "dovePay",
+    "doveMgr"
+  ],
+  "author": "lvfd@acca.com.cn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lvfd/dove-ui-server/issues"
+  },
+  "homepage": "https://github.com/lvfd/dove-ui-server#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "helmet": "^6.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "@lyufudi/dove-utils": "latest",
+    "@lyufudi/uikit": "latest",
+    "@lyufudi/uikit-v2": "latest",
+    "babel-loader": "^9.1.2",
+    "browser-dtector": "^3.2.0",
+    "chart.js": "^3.9.1",
+    "core-js": "^3.29.0",
+    "dom4": "^2.1.6",
+    "jquery-lts": "npm:jquery@^3.6.3",
+    "jquery-v2": "npm:jquery@^2.2.4",
+    "showmodaldialog": "^1.0.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-merge": "^5.8.0"
+  }
+}
