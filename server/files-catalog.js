@@ -1,10 +1,10 @@
 const fs = require('fs')
 const path = require('path')
 
-module.exports = function(expressApp, staticFilesFolder) {
-  expressApp.get(`/${staticFilesFolder}`, (req, res) => res.send(buildCatalog(process.cwd(), staticFilesFolder)))
+module.exports = function(expressApp, route, staticFilesFolder) {
+  expressApp.get(route, (req, res) => res.send(buildCatalog(process.cwd(), staticFilesFolder)))
   getAllfolders(process.cwd(), staticFilesFolder).forEach( folder => {
-    expressApp.get(`/${staticFilesFolder}/${folder}`, (req, res) => res.send(buildCatalog(process.cwd(), `${staticFilesFolder}/${folder}`)))
+    expressApp.get(`${route}/${folder}`, (req, res) => res.send(buildCatalog(process.cwd(), `${staticFilesFolder}/${folder}`)))
   })
 }
 
