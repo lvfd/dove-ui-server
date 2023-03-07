@@ -4,8 +4,9 @@
   "description": "Almost for Java Platform JSPs",
   "main": "index.js",
   "scripts": {
-    "build-limit": "npx webpack --config webpack.limit-browser.js --node-env production && npx webpack --config webpack.limit-browser.js --node-env development",
+    "build-limit": "npx webpack --config webpack.limit-browser.js --node-env production",
     "build-dovepay": "npx webpack --config webpack.dovepay.js --node-env production",
+    "test-dovepay": "npx webpack --config webpack.dovepay.js --node-env development",
     "start": "node server",
     "test": "set NODE_ENV=development&& node server"
   },

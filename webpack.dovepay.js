@@ -14,9 +14,9 @@ module.exports = merge(common, {
     'dovepay-payment.vendor': './src/dovepay-payment/vendor'
   },
   output: {
-    clean: true,
+    clean: env === 'production'? false: true,
     // path: path.resolve(__dirname, '..', '..', 'git/dovePay/src/main/webapp/node/dovepay-ui'):
-    path: path.resolve(__dirname, 'release'),
+    path: path.resolve(__dirname, env === 'production'? 'release': 'test'),
     filename: (pathData) => {
       const name = pathData.chunk.name.split('.').join('/')
       return 'production'? `${name}.min.js`: `${name}.js`
