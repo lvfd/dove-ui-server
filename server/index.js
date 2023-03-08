@@ -7,7 +7,7 @@ const helmet = require('helmet')
 const filesCatalog = require('./files-catalog')
 const appname = 'dove-us'
 
-// app.use(helmet())
+app.use(helmet())
 app.get(`/${appname}`, (req, res) => res.send(`
   <h1>dove-ui-server</h1>
   <h2>mode=${env}</h2>
@@ -27,4 +27,5 @@ if (env === 'development') {
 
 app.listen(port, () => {
   console.log(`dove-ui-server is running in '${env}' enviroment.`)
+  console.log(`context: /${appname}`)
 })
