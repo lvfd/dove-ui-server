@@ -9,18 +9,9 @@ module.exports = merge(common, {
     'dovepay.main': './src/dovepay/main',
     'dovepay.system-index': './src/dovepay/system-index',
     'dovepay.exceptionPage': './src/dovepay/exceptionPage',
-    'dovepay-payment.accaActPay': './src/dovepay-payment/accaActPay',
-    'dovepay-payment.accaBankPay': './src/dovepay-payment/accaBankPay',
-    'dovepay-payment.vendor': './src/dovepay-payment/vendor'
-  },
-  output: {
-    clean: env === 'production'? false: true,
-    // path: path.resolve(__dirname, '..', '..', 'git/dovePay/src/main/webapp/node/dovepay-ui'):
-    path: path.resolve(__dirname, env === 'production'? 'release': 'test'),
-    filename: (pathData) => {
-      const name = pathData.chunk.name.split('.').join('/')
-      return 'production'? `${name}.min.js`: `${name}.js`
-    }
+    // 'dovepay-payment.accaActPay': './src/dovepay-payment/accaActPay',
+    // 'dovepay-payment.accaBankPay': './src/dovepay-payment/accaBankPay',
+    // 'dovepay-payment.vendor': './src/dovepay-payment/vendor'
   },
   optimization: {
     splitChunks: {
@@ -28,14 +19,14 @@ module.exports = merge(common, {
       cacheGroups: {
         commons: {
           name: 'commons',
-          filename: env === 'production'? '[name].min.js': '[name].js',
+          filename: (pathData) => `dovepay/${pathData.chunk.name}${env === 'production'? '.min.': '.'}js`,
           chunks: 'initial',
           minChunks: 2,
         },
         libs: {
           name: 'libs',
-          filename: env === 'production'? '[name].min.js': '[name].js',
-          test: /[\\/]node_modules[\\/]/,
+          filename: (pathData) => `dovepay/${pathData.chunk.name}${env === 'production'? '.min.': '.'}js`,
+          test: /[\\/]node_modules[\\/]/
         }
       }
     }

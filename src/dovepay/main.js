@@ -1,5 +1,4 @@
-import { iframe as setIframe } from '@lyufudi/dove-utils'
-import dominit from './dominit'
+import { iframe as setIframe, dominit } from '@lyufudi/dove-utils'
 import iframeContentHandler from './contentDocument'
 import {setIframeHeight, display, hide, setSubNav, adaptContentIframe} from './functions'
 import getVendor from './vendor'

@@ -2,9 +2,23 @@ const env = process.env.NODE_ENV? process.env.NODE_ENV: 'production'
 const path = require('path')
 
 module.exports = {
+  name: 'common',
   mode: env,
   devtool: env === 'production'? 'source-map': 'inline-source-map',
+  output: {
+    clean: env === 'production'? false: true,
+    path: path.resolve(__dirname, env === 'production'? 'release': 'test'),
+    filename: (pathData) => {
+      const name = pathData.chunk.name.split('.').join('/')
+      return env === 'production'? `${name}.min.js`: `${name}.js`
+    }
+  },
   module: {
+    generator: {
+      'asset/resource': {
+        outputPath: 'asset/'
+      }
+    },
     rules: [{
       test: /\.m?js$/,
       include: path.resolve(__dirname, 'src'),
@@ -29,21 +43,21 @@ module.exports = {
       test: /\.(png|svg|jpg|jpeg|gif)$/i,
       type: 'asset/resource',
       generator: {
-        filename: 'asset/images/[name][ext]'
+        filename: 'images/[name][ext]'
       }
     },
     {
       test: /\.css$/i,
       type: 'asset/resource',
       generator: {
-        filename: 'asset/styles/[name][ext]'
+        filename: 'styles/[name][ext]'
       }
     },
     {
       test: /\.((woff)|(woff2)|(eot)|(ttf)|(otf))$/i,
       type: 'asset/resource',
       generator: {
-        filename: 'asset/fonts/[name][ext]'
+        filename: 'fonts/[name][ext]'
       },
       include: [path.resolve(__dirname, 'node_modules/@lyufudi/uikit-v2/dist')]
     },
@@ -51,7 +65,7 @@ module.exports = {
       test: /\.(js)$/i,
       type: 'asset/resource',
       generator: {
-        filename: 'asset/plugins/[name][ext]'
+        filename: 'plugins/[name][ext]'
       },
       include: [
         path.resolve(__dirname, 'node_modules/@lyufudi/uikit/dist'),
@@ -65,7 +79,7 @@ module.exports = {
       test: /\.(js)$/i,
       type: 'asset/resource',
       generator: {
-        filename: 'asset/plugins/compatible/[name][ext]'
+        filename: 'plugins/compatible/[name][ext]'
       },
       include: [
         path.resolve(__dirname, 'node_modules/@lyufudi/uikit-v2/dist'),
@@ -75,7 +89,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      '@src': path.resolve(__dirname, 'src')
+      '@src': path.resolve(__dirname, 'src'),
+      '@lyufudi/dove-utils': env === 'production'? '@lyufudi/dove-utils': path.resolve(__dirname, '..', 'dove-utils')
     }
   },
   watch: env === 'development'? true: false,
