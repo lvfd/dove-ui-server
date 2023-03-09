@@ -4,11 +4,9 @@ import {setIframeHeight, display, hide, setSubNav, adaptContentIframe} from './f
 import getVendor from './vendor'
 import dovepay_css from '@lyufudi/dove-utils/assets/styles/dovepay.css'
 
-export default function() {
-  getVendor()
-  document.write(`<link type="text/css" rel="stylesheet" href="${dovepay_css}">`)
-  window.addEventListener('DOMContentLoaded', main)
-}
+getVendor()
+document.write(`<link type="text/css" rel="stylesheet" href="${dovepay_css}">`)
+window.addEventListener('DOMContentLoaded', main)
 
 function main() {
   try {

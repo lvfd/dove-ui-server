@@ -6,8 +6,9 @@ const env = process.env.NODE_ENV? process.env.NODE_ENV: 'production'
 const helmet = require('helmet')
 const filesCatalog = require('./files-catalog')
 const appname = 'dove-us'
+const { CORP } = require('../project.config')
 
-app.use(helmet())
+app.use(helmet({ crossOriginResourcePolicy: CORP }))
 app.get(`/${appname}`, (req, res) => res.send(`
   <h1>dove-ui-server</h1>
   <h2>mode=${env}</h2>
