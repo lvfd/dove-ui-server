@@ -1,14 +1,14 @@
 {
   "name": "@lyufudi/dove-ui-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Almost for Java Platform JSPs",
   "main": "index.js",
   "scripts": {
-    "build-limit": "npx webpack --config webpack.limit-browser.js --node-env production",
-    "build-dovepay": "npx webpack --config webpack.dovepay.js --node-env production",
-    "build-dovepay-payment": "npx webpack --config webpack.dovepay-payment.js --node-env production",
-    "build-dovemgr": "npx webpack --config webpack.dovemgr.js --node-env production",
-    "test": "npx webpack --config webpack.dovemgr.js --node-env development",
+    "build-limit": "npx webpack --config-name limit-browser --node-env production",
+    "build-dovepay": "npx webpack --config-name dovepay --node-env production",
+    "build-dovepay-payment": "npx webpack --config-name dovepay-payment --node-env production",
+    "build-dovemgr": "npx webpack --config-name dovemgr --node-env production",
+    "test": "",
     "start": "node server"
   },
   "repository": {

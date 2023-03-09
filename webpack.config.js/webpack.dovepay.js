@@ -9,9 +9,6 @@ module.exports = merge(common, {
     'dovepay.main': './src/dovepay/main',
     'dovepay.system-index': './src/dovepay/system-index',
     'dovepay.exceptionPage': './src/dovepay/exceptionPage',
-    // 'dovepay-payment.accaActPay': './src/dovepay-payment/accaActPay',
-    // 'dovepay-payment.accaBankPay': './src/dovepay-payment/accaBankPay',
-    // 'dovepay-payment.vendor': './src/dovepay-payment/vendor'
   },
   optimization: {
     splitChunks: {

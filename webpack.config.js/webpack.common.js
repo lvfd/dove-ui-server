@@ -1,5 +1,6 @@
 const env = process.env.NODE_ENV? process.env.NODE_ENV: 'production'
 const path = require('path')
+const { platform, dirname } = require('../project.config')
 
 module.exports = {
   name: 'common',
@@ -7,7 +8,8 @@ module.exports = {
   devtool: env === 'production'? 'source-map': 'inline-source-map',
   output: {
     clean: env === 'production'? false: true,
-    path: path.resolve(__dirname, env === 'production'? 'release': 'test'),
+    path: path.resolve(dirname, env === 'production'? 'release': 'test'),
+    publicPath: `${platform}/dove-us/${env === 'production'? 'release': 'test'}/`,
     filename: (pathData) => {
       const name = pathData.chunk.name.split('.').join('/')
       return env === 'production'? `${name}.min.js`: `${name}.js`
@@ -16,13 +18,14 @@ module.exports = {
   module: {
     generator: {
       'asset/resource': {
+        publicPath: `${platform}/dove-us/${env === 'production'? 'release': 'test'}/asset/`,
         outputPath: 'asset/'
       }
     },
     rules: [{
       test: /\.m?js$/,
-      include: path.resolve(__dirname, 'src'),
-      // exclude: path.resolve(__dirname, 'src/static'),
+      include: path.resolve(dirname, 'src'),
+      // exclude: path.resolve(dirname, 'src/static'),
       use: {
         loader: "babel-loader",
         options: {
@@ -59,7 +62,7 @@ module.exports = {
       generator: {
         filename: 'fonts/[name][ext]'
       },
-      include: [path.resolve(__dirname, 'node_modules/@lyufudi/uikit-v2/dist')]
+      include: [path.resolve(dirname, 'node_modules/@lyufudi/uikit-v2/dist')]
     },
     {
       test: /\.(js)$/i,
@@ -68,11 +71,11 @@ module.exports = {
         filename: 'plugins/[name][ext]'
       },
       include: [
-        path.resolve(__dirname, 'node_modules/@lyufudi/uikit/dist'),
-        path.resolve(__dirname, 'node_modules/jquery-lts/dist'),
-        path.resolve(__dirname, 'node_modules/dom4'),
-        path.resolve(__dirname, 'node_modules/showmodaldialog'),
-        path.resolve(__dirname, 'node_modules/chart.js/dist')
+        path.resolve(dirname, 'node_modules/@lyufudi/uikit/dist'),
+        path.resolve(dirname, 'node_modules/jquery-lts/dist'),
+        path.resolve(dirname, 'node_modules/dom4'),
+        path.resolve(dirname, 'node_modules/showmodaldialog'),
+        path.resolve(dirname, 'node_modules/chart.js/dist')
       ]
     },
     {
@@ -82,15 +85,15 @@ module.exports = {
         filename: 'plugins/compatible/[name][ext]'
       },
       include: [
-        path.resolve(__dirname, 'node_modules/@lyufudi/uikit-v2/dist'),
-        path.resolve(__dirname, 'node_modules/jquery-v2/dist'),
+        path.resolve(dirname, 'node_modules/@lyufudi/uikit-v2/dist'),
+        path.resolve(dirname, 'node_modules/jquery-v2/dist'),
       ]
     }]
   },
   resolve: {
     alias: {
-      '@src': path.resolve(__dirname, 'src'),
-      '@lyufudi/dove-utils': env === 'production'? '@lyufudi/dove-utils': path.resolve(__dirname, '..', 'dove-utils')
+      '@src': path.resolve(dirname, 'src'),
+      '@lyufudi/dove-utils': env === 'production'? '@lyufudi/dove-utils': path.resolve(dirname, '..', 'dove-utils')
     }
   },
   watch: env === 'development'? true: false,
