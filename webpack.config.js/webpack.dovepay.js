@@ -1,7 +1,7 @@
 const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
 const path = require('path')
-const env = process.env.NODE_ENV? process.env.NODE_ENV: 'production'
+// const env = process.env.NODE_ENV? process.env.NODE_ENV: 'production'
 
 module.exports = merge(common, {
   name: 'dovepay',
@@ -16,13 +16,15 @@ module.exports = merge(common, {
       cacheGroups: {
         commons: {
           name: 'commons',
-          filename: (pathData) => `dovepay/${pathData.chunk.name}${env === 'production'? '.min.': '.'}js`,
+          // filename: (pathData) => `dovepay/${pathData.chunk.name}${env === 'production'? '.min.': '.'}js`,
+          filename: (pathData) => `dovepay/${pathData.chunk.name}.min.js`,
           chunks: 'initial',
           minChunks: 2,
         },
         libs: {
           name: 'libs',
-          filename: (pathData) => `dovepay/${pathData.chunk.name}${env === 'production'? '.min.': '.'}js`,
+          // filename: (pathData) => `dovepay/${pathData.chunk.name}${env === 'production'? '.min.': '.'}js`,
+          filename: (pathData) => `dovepay/${pathData.chunk.name}.min.js`,
           test: /[\\/]node_modules[\\/]/
         }
       }

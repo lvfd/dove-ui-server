@@ -1,24 +1,24 @@
-const env = process.env.NODE_ENV? process.env.NODE_ENV: 'production'
 const path = require('path')
-const { platform, dirname } = require('../project.config')
+const { node_env, platform, dirname } = require('../project.config')
 
 module.exports = {
   name: 'common',
-  mode: env,
-  devtool: env === 'production'? 'source-map': 'inline-source-map',
+  mode: node_env,
+  devtool: node_env === 'production'? 'source-map': 'inline-source-map',
   output: {
-    clean: env === 'production'? false: true,
-    path: path.resolve(dirname, env === 'production'? 'release': 'test'),
-    publicPath: `${platform}/dove-us/${env === 'production'? 'release': 'test'}/`,
+    // clean: node_env === 'production'? false: true,
+    path: path.resolve(dirname, node_env === 'production'? 'release': 'test'),
+    publicPath: `${platform}/dove-us/${node_env === 'production'? 'release': 'test'}/`,
     filename: (pathData) => {
       const name = pathData.chunk.name.split('.').join('/')
-      return env === 'production'? `${name}.min.js`: `${name}.js`
+      // return node_env === 'production'? `${name}.min.js`: `${name}.js`
+      return `${name}.min.js`
     }
   },
   module: {
     generator: {
       'asset/resource': {
-        publicPath: `${platform}/dove-us/${env === 'production'? 'release': 'test'}/asset/`,
+        publicPath: `${platform}/dove-us/${node_env === 'production'? 'release': 'test'}/asset/`,
         outputPath: 'asset/'
       }
     },
@@ -93,10 +93,11 @@ module.exports = {
   resolve: {
     alias: {
       '@src': path.resolve(dirname, 'src'),
-      '@lyufudi/dove-utils': env === 'production'? '@lyufudi/dove-utils': path.resolve(dirname, '..', 'dove-utils')
+      '@lyufudi/dove-utils': node_env === 'production'? '@lyufudi/dove-utils': path.resolve(dirname, '..', 'dove-utils')
+      // '@lyufudi/dove-utils': path.resolve(dirname, '..', 'dove-utils')
     }
   },
-  watch: env === 'development'? true: false,
+  // watch: env === 'development'? true: false,
   watchOptions: {
     aggregateTimeout: 1000,
     ignored: /node_modules/

@@ -1,8 +1,4 @@
 /* custom  */
-header .uk-logo > img {
-  height: 60px;
-  padding: 15px 0;
-}
 .uk-subnav>*>:first-child,
 #my_menu .uk-subnav > li > a:link {
   color: #fff;
