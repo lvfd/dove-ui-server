@@ -4,7 +4,7 @@ const path = require('path')
 // const env = process.env.NODE_ENV? process.env.NODE_ENV: 'production'
 
 module.exports = merge(common, {
-  name: 'dovepay',
+  name: 'dovepay-payment',
   entry: {
     'dovepay-payment.accaActPay': './src/dovepay-payment/accaActPay',
     'dovepay-payment.accaBankPay': './src/dovepay-payment/accaBankPay',

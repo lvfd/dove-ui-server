@@ -1,14 +1,17 @@
 const path = require('path')
 const express = require('express')
+const ejs = require('ejs')
 const app = express()
 const port = 3000
 const env = process.env.NODE_ENV? process.env.NODE_ENV: 'production'
 const helmet = require('helmet')
 const filesCatalog = require('./files-catalog')
 const appname = 'dove-us'
-const { CORP } = require('../project.config')
+const { dirname, CORP } = require('../project.config')
 
-app.use(helmet({ crossOriginResourcePolicy: CORP }))
+if (env === 'production') {
+  app.use(helmet({ crossOriginResourcePolicy: CORP }))
+}
 app.get(`/${appname}`, (req, res) => res.send(`
   <h1>dove-ui-server</h1>
   <h2>mode=${env}</h2>
@@ -18,12 +21,19 @@ app.get(`/${appname}`, (req, res) => res.send(`
   </ul>
 `))
 
-app.use(`/${appname}/release`, express.static(path.resolve(process.cwd(), 'release')))
+app.use(`/${appname}/release`, express.static(path.resolve(dirname, 'release')))
 filesCatalog(app, `/${appname}/release`, 'release')
 
 if (env === 'development') {
-  app.use(`/${appname}/test`, express.static(path.resolve(process.cwd(), 'test')))
+  app.use(`/${appname}/test`, express.static(path.resolve(dirname, 'test')))
   filesCatalog(app, `/${appname}/test`, 'test')
+
+  app.set('view engine', 'html')
+  app.engine('html', ejs.__express)
+  app.set('views', path.resolve(dirname, 'templates'))
+  app.use('/dt/dist', express.static(path.resolve(dirname, 'release/dovepay-payment')))
+  app.get('/dt/1', (req, res) => res.render('accaActPay'))
+  app.get('/dt/2', (req, res) => res.render('accaBankPay'))
 }
 
 app.listen(port, () => {

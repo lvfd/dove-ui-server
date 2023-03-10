@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>德付通支付平台</title>
+<script src="https://test.dovepay.com/dovePay/js/Polyfill.js"></script>
+<script type="text/javascript" src="https://test.dovepay.com/dovePay/js/jquery-one.seven.min.js"></script>
+<script type="text/javascript" src="https://test.dovepay.com/dovePay/js/jquery.DatePicker.min.js"></script>
+<script language="javascript" src="https://test.dovepay.com/dovePay/js/dfp_CH01.js"></script>
+<script language="javascript" src="https://test.dovepay.com/dovePay/js/PassGuardCtrl.js"></script>
+<script language="javascript" src="https://test.dovepay.com/dovePay/js/thickbox.js"></script>
+<script language="javascript" src="https://test.dovepay.com/dovePay/js/password.js"></script>
+<script type="text/javascript" src="https://test.dovepay.com/dovePay/js/CheckstandBanks.js"></script>
+
+<script>
+  var dfp = model.dfp.getDfpValues(); 
+  dfp();
+
+  window.onload = function() {
+    var str = document.getElementsByName("checkstandWay");
+    var objarray = str.length;
+    for (var i = 0; i < objarray; i++) {
+      if (str[i].checked == true) {
+        changeStyle();
+      }
+    }
+  };
+  function changeStyle(){
+    var chkObjs = document.getElementsByName("checkstandWay");
+    $("ol.SelectBank").css({"display":"none"});
+    for(var i=0;i<chkObjs.length;i++){
+      if(chkObjs[i].checked){
+        var title_id = chkObjs[i].value;
+        var params = title_id.split("_");
+        $("#payInput_" + params[1]).css({"display":""});
+        break; 
+      } 
+    }
+  }
+
+  function my_submit() {
+    document.payForm.submit1.disabled = true;
+    window.setTimeout("f1();", 3000);
+    document.payForm.submit();
+  }
+  function f1(){
+    document.payForm.submit1.disabled=false;
+  }
+  
+  
+  function checkboxChange(paytype){
+    document.getElementById("chooseType").value = "";
+    if(paytype == 0) {
+      document.getElementById("chooseType").value = "BTBCREDITPAY";
+      document.getElementById("accountChooseType").innerHTML = "B2B信用支付";
+    }
+    if(paytype == 1) document.getElementById("accountChooseType").innerHTML = "账户支付";
+    if(paytype == 2) document.getElementById("accountChooseType").innerHTML = "安途账户支付";
+    var paytypearr = document.getElementsByName("accountChoose");
+      var bool = false ;       
+      for(var i=0;i<paytypearr.length;i++){
+        if(paytype == paytypearr[i].value) {
+          if(paytypearr[i].checked) {
+            bool = true;
+          }
+        }else {
+          paytypearr[i].checked=false;  
+        }
+      }
+      if(bool && paytype == 1){
+        document.getElementById("wzhPay").style.display="none";
+        document.getElementById("AccountEnough").style.display="";
+        document.getElementById("accountPay").style.display="";
+        document.getElementById("autuPayArea").style.display="none";
+      }else if(bool &&  paytype == 2){
+        document.getElementById("wzhPay").style.display="none";
+        document.getElementById("AccountEnough").style.display="none";
+        document.getElementById("accountPay").style.display="none";
+        document.getElementById("autuPayArea").style.display="";
+      }else{
+        document.getElementById("wzhPay").style.display="";
+        document.getElementById("AccountEnough").style.display="none";
+        document.getElementById("accountPay").style.display="none";
+        document.getElementById("autuPayArea").style.display="none";
+      }
+      
+    /* var ObjValue= document.getElementById("accountChoose"); 
+        if(ObjValue.checked) {
+      if(flage==1) {
+          document.getElementById("AccountEnough").style.display="";
+          document.getElementById("payWayHidden").style.display="none";
+          document.getElementById("bankListHidden").style.display="none";
+          document.getElementById("accountPay").style.display="";
+        }else{
+          //document.getElementById("AccountNotEnough").style.display="";
+          document.getElementById("payWayHidden").style.display="";
+          document.getElementById("bankListHidden").style.display="";
+          document.getElementById("accountPay").style.display="none";
+      }
+      } else {
+        document.getElementById("AccountEnough").style.display="none";
+          //document.getElementById("AccountNotEnough").style.display="none";
+      document.getElementById("payWayHidden").style.display="";
+      document.getElementById("bankListHidden").style.display="";
+      document.getElementById("accountPay").style.display="none";
+    }
+  
+    if(ObjValue.checked){ 
+      //alert("已选择");
+      ObjValue.value = 1; 
+      ObjValue.checked="checked";
+      //alert(document.getElementById("accountChoose").value );
+    } else {
+      //document.getElementById("AccountNotEnough").style.display="none";
+      document.getElementById("AccountEnough").style.display="none";
+      //alert("未选择");
+      ObjValue.value = 0; 
+      ObjValue.checked="";
+      //alert(document.getElementById("accountChoose").value );
+    } */
+    
+  }
+
+  function setAccountPay(){
+    //风控指纹采集
+      var deviceFinger = model.dfp.getDeviceFinger();
+    document.getElementById("deviceFinger").value = deviceFinger;
+    var deviceToken = model.dfp.getDeviceToken();
+    document.getElementById("deviceToken").value = deviceToken;
+    
+    var paytypearr = document.getElementsByName("accountChoose");
+      var bool = false ;       
+      for(var i=0;i<paytypearr.length;i++){
+        if(paytypearr[i].checked) {
+          bool = true;
+          break;
+        }
+      }
+    //var ObjValue= document.getElementById("accountChoose"); 
+    //var orderAmt=$("#orderAmt").val();
+    try {
+      if(bool){ 
+        document.getElementById("payUserBank_m1").value="doAccountPay";
+      } else {
+        document.getElementById("amt").value=orderAmt;
+        document.getElementById("payUserBank_m1").value="confirmPayType";
+      }
+    } catch (e) {
+    }
+    //  if(checkBankId())
+    document.payUserBank.submit();
+  }
+  
+  function setAutuPay(){
+    //风控指纹采集
+    try{
+        var deviceFinger = model.dfp.getDeviceFinger();
+      document.getElementById("deviceFinger").value = deviceFinger;
+      var deviceToken = model.dfp.getDeviceToken();
+      document.getElementById("deviceToken").value = deviceToken;
+      document.getElementById("payUserBank_m1").value="antuPay";
+    }catch (e) {
+    }
+    document.payUserBank.submit();
+  }
+</script>
+<script type="text/javascript" src="http://localhost:3000/dt/dist/commons.min.js"></script>
+<script type="text/javascript" src="http://localhost:3000/dt/dist/accaBankPay.min.js"></script>
+</head>
+<body>
+  <header class="uk-box-shadow-medium"><%- include('protected/header.html') %></header>
+  <main>
+    <div class="payw uk-container uk-container-large uk-padding-small">
+      <div class="uk-flex uk-flex-center">
+        <div class="leftpay uk-width-3-4 uk-margin-right">
+          <h1 class="uk-heading-bullet uk-heading-line uk-h4"><span>订单信息</span></h1>
+          <div class="uk-alert-primary" uk-alert><p><strong>哈哈哈哈</strong>您在生生世世口令卡行家里手德令哈</p></div>
+          <form action="https://test.dovepay.com/dovePay/payAction.do" method="post" name="payUserBank" onSubmit="return checkBankId();">
+            <div class="til_iput2">
+              <input type="hidden" name="amt" id="amt" value="-9324.50" /> 
+              <input type="hidden" name="amt" id="amt" value="null" /> 
+              <input type="hidden" name="balance" value="9374.50" /> 
+              <input type="hidden" name="orderAmt" id="orderAmt" value="50.00" /> 
+              <input type="hidden" name="orderId" value="2023020700457611" /> 
+              <input type="hidden" id='payUserBank_m1' name="m"  />
+              <input type="hidden" id="creditType" name="creditType" value="0" />
+              <input type="hidden" id="userId" name="userId" value=dptest_qy_1&#x40;qq.com />
+              <input type="hidden" id="isTogether" name="isTogether" value="0"/>
+              <input type="hidden" name="deviceToken" id="deviceToken" /> 
+              <input type="hidden" name="deviceFinger" id="deviceFinger" /> 
+              <input type="hidden" name="token" value="1675760819620"/>
+              <input type="hidden" name="chooseType" id="chooseType" /> 
+              <!--    <input type="hidden" id="m"  value="doAccountPay" /> -->
+              <table class="uk-table uk-table-striped uk-table-small">
+                <tr>
+                  <td>
+                    订单金额：<span class="uk-text-danger">50.00</span>
+                        元
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    账户余额：<span class="uk-text-success">9374.50</span>
+                    元
+                  </td>
+                </tr>
+              </table>
+              <!-- 支付平台将引导您通过银行卡充值，完成本次付款！ -->
+              <div class="uk-margin-small">
+                <input class="uk-checkbox" type="checkbox" id="btbCreditAccountChoose" name="accountChoose" value="0" onclick="checkboxChange(0)"/>使用担保账户余额:<font size="3px" color="red">9374.50</font> 元 进行订单支付
+              </div>
+              <div class="uk-margin-small">
+                <input class="uk-checkbox" type="checkbox" id="accountChoose" name="accountChoose"  value="1" onclick="checkboxChange(1)" />使用账户余额:<font size="3px" color="red">9374.50</font> 元 进行订单支付.
+                <span style="color:red">您的余额资金不足，请选择下列银行进行网银支付。</span>
+              </div>
+              <div class="uk-margin-small">
+                <input class="uk-checkbox" type="checkbox" id="accountChoose" name="accountChoose"  value="2" onclick="checkboxChange(2)" />使用安途余额:<font size="3px" color="red">9374.50</font> 元 进行订单支付.
+              </div>
+              <div class="uk-margin-small uk-flex uk-flex-middle">
+                <label class="uk-form-label uk-form-width-small">短信验证码：</label>
+                <input type="text" id="smsCode" name="smsCode" value="" class="uk-input uk-form-width-medium">
+                <input type="button" class="uk-button uk-button-primary" name="btnCode" id="btnCode" value="获取验证码">
+              </div>
+              <div class="uk-alert-primary uk-inline uk-margin-remove" uk-alert>
+                注：验证码将发向您绑定的手机号码，将于60秒有效，如您未收到验证码，请60秒后重试。
+              </div>
+              <div class="redab uk-alert-danger" id="errMsg"></div>
+            </div>
+            <div class="uk-card uk-card-default uk-margin">
+              <div class="uk-card-body">
+                <p>订单号:123456789</p>
+                <p>下单时间：123456789</p>
+                <p>金额：123456789元</p>
+                <strong>您确认要使用123456账户支付该笔订单吗？</strong>
+              </div>
+              <div class="uk-card-footer uk-flex uk-flex-center">
+                <input type="submit" name="Submit2" value="确 认" class="uk-button uk-button-primary uk-margin-small-right"/>
+                <input type="reset" name="Submit" value="放 弃" class="uk-button uk-button-default"  onClick="window.location='webBankPay.html';"/>
+              </div>
+            </div>
+            <h1 class="uk-heading-bullet uk-heading-line uk-h4"><span>账户支付</span></h1>
+            <div class="uk-card uk-card-default">
+              <div class="uk-card-header">
+                <h3 class="uk-text-success"><span uk-icon="icon: check" class="uk-margin-small-right"></span>恭喜您支付成功！</h3>
+              </div>
+              <div class="uk-card-header">
+                <h3 class="uk-text-danger"><span uk-icon="icon: warning" class="uk-margin-small-right"></span>对不起，支付失败！</h3>
+              </div>
+              <div class="uk-card-body">
+                <p>支付时间：123123</p>
+                <p>支付金额：123123元</p>
+                <p>剩余金额：123123元</p>
+                <p>订单号：123123</p>
+                <p>备注信息：123123</p>
+                <div class="redab uk-alert-danger" uk-alert><span id="message"></span></div>
+              </div>
+              <div class="uk-card-footer uk-flex uk-flex-center">
+                <form name="form1" action="" method="get" onsubmit="return checkSubmit()">
+                  <input type="submit" value="确定" class="uk-button uk-button-primary"/>
+                </form>
+              </div>
+            </div>
+            <div id="wzhPay" class="uk-margin">
+              <%- include('checkstand/AccaPayBankType_Ways.html', { src: 'accaBankPay'}) %>
+              <%- include('checkstand/AccaPayBankType_Banks.html', {src: 'accaBankPay'}) %>
+            </div>
+            <div id="accountPay" class="uk-margin" style="display:none">
+              <div class="uk-card uk-card-default">
+                <div class="uk-card-body">
+                  <div id="AccountEnough" style="display:none;color:green">您已经选择<span id="accountChooseType">账户支付</span>，且账户余额足够，请直接提交进行支付. </div>
+                </div>
+                <div class="uk-card-footer">
+                  <input class="uk-button uk-button-primary" type="button" onclick="setAccountPay()" value='确认支付' class="botton" />
+                </div>
+              </div>
+            </div>
+            <div id="autuPayArea" class="uk-margin" style="display:none">
+              <div class="uk-card uk-card-default">
+                <div class="uk-card-body">
+                  <p style="color:red">确认使用安途余额进行支付？</p>
+                </div>
+                <div class="uk-card-footer">
+                  <input class="uk-button uk-button-primary" type="button" onclick="setAutuPay()" value='确认支付' class="botton" />
+                </div>
+              </div>
+            </div>
+            
+          </form>
+        </div>
+        <%- include('rightpay.html') %>
+      </div>
+    </div>
+  </main>
+  <footer class="uk-background-muted"><%- include('protected/footer.html') %></footer>
+</body>
+</html>

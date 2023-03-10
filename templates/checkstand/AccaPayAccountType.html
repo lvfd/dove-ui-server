@@ -1,0 +1,52 @@
+<form class="payForm" id="zhPay" action="https://test.dovepay.com/dovePay/payAction.do" name="payForm" method="post" >
+  <input type="hidden" name="orderId" value="2023020300457362" /> 
+  <input type="hidden" name="isBlRepay" value="0" /> 
+  <input type="hidden" name="m" value="login" />
+  <input type="hidden" id="macNumber" name="macNumber" value="" />
+  <input type="hidden" id="SAFE_PLUGIN_LOGIN_PASSWORD" name="SAFE_PLUGIN_LOGIN_PASSWORD" />
+  <input type="hidden" name="token" value="1675410002236" />
+  <input type="hidden" name="deviceToken" id="deviceToken" /> 
+  <input type="hidden" name="deviceFinger" id="deviceFinger" />
+  <div class="pay_iput uk-align-center" style="width: 560px">
+    <div class="uk-margin">
+      <div class="uk-form-custom uk-flex uk-flex-middle">
+        <label class="uk-form-label" style="width: 70px">账户名</label>
+        <div class="uk-form-controls">
+          <input class="uk-input uk-width-medium uk-margin-right" name="userId" id="userId" type="text" onblur="checkForm()" placeholder="请输入Email地址或手机号码">
+        </div>
+        <span class="uk-text-meta">忘记帐户名，请联系客服</span>
+      </div>
+    </div>
+    <div class="uk-margin">
+      <div class="uk-form-custom uk-flex uk-flex-middle">
+        <label class="uk-form-label" style="width: 70px">交易密码</label>
+        <div class="uk-form-controls">
+          <input class="uk-input uk-width-medium uk-margin-right" id="" type="text" placeholder="请输入帐户交易密码，不是登录密码">
+        </div>
+        <span class="uk-text-meta">忘记密码，请联系客服</span>
+      </div>
+    </div>
+    <div class="uk-margin">
+      <div class="uk-form-custom uk-flex uk-flex-middle">
+        <label class="uk-form-label" style="width: 70px">验证码</label>
+        <div class="uk-form-controls">
+          <div class="uk-inline">
+            <a title="刷新验证码" class="uk-form-icon uk-form-icon-flip uk-margin-right" uk-icon="icon: refresh" onclick="changeValidateImage()"></a>
+            <input class="uk-input uk-width-medium uk-margin-right" id="" type="text" placeholder="请输入右侧验证码">
+          </div>
+        </div>
+        <img id="randomCode" style="height: 40px" src="https://test.dovepay.com/dovePay/servlet/myimage.do" alt="验证码"/>
+      </div>
+    </div>
+  </div>  
+  <div class="uk-flex uk-flex-center">
+    <span id="errLi1" class="uk-text-meta uk-text-danger">提示信息: </span>
+    <span id="errLi2" class="uk-text-meta uk-text-danger"><span id="errMsg">一些提示信息</span></span>
+  </div>
+  <hr>
+  <div class="uk-margin uk-flex uk-flex-center">
+    <!-- <input type="button" class="uk-button uk-button-primary uk-form-width-small uk-margin-small-right" id="formButtonId"  value="提交" onclick="FormSubmit();" /> -->
+    <a class="uk-button uk-button-primary uk-form-width-small uk-margin-small-right" href="/dt/2">提交</a>
+    <input type="reset"  class="uk-button uk-button-default uk-form-width-small" value="重置" />
+  </div>
+</form>
