@@ -1,5 +1,5 @@
 const { src, dest, watch } = require('gulp')
-const { node_env } = require('project.config')
+const { node_env } = require('./project.config')
 
 const sourceRoot = node_env === 'production'? 'release': 'test'
 const javaRoot = 'C:/Users/lvfd/git-idea/'
