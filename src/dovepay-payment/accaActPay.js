@@ -57,6 +57,7 @@ export function bindBankType_Ways() {
       }
     })
   })
+  el[0].click()
 }
 
 import { logoInfo } from '@lyufudi/dove-utils'
