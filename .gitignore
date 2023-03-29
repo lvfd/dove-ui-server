@@ -107,3 +107,5 @@ test
 /release/*
 !/release/asset/
 !/release/limit-browser.min.js
+/.idea
+/*.iml
