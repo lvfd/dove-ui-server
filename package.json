@@ -1,6 +1,6 @@
 {
   "name": "@lyufudi/dove-ui-server",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Almost for Java Platform JSPs",
   "main": "index.js",
   "scripts": {
