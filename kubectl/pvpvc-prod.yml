@@ -6,10 +6,10 @@ metadata:
     name: $PROJECT-log
 spec:
   capacity:
-    storage: 3Gi
+    storage: 5Gi
   nfs:
-    server: 10.1.85.241
-    path: /data/nfs/Project/app-log
+    server: 10.1.84.9
+    path: /ocp/app-log
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
@@ -23,10 +23,10 @@ metadata:
     name: $PROJECT-file
 spec:
   capacity:
-    storage: 3Gi
+    storage: 5Gi
   nfs:
-    server: 10.1.85.241
-    path: /data/nfs/Project/app-file
+    server: 10.1.7.29
+    path: /epay
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
@@ -45,7 +45,7 @@ spec:
       name: $PROJECT-file
   resources:
     requests:
-      storage: 3Gi
+      storage: 5Gi
   storageClassName: $PROJECT-file
 ---
 kind: PersistentVolumeClaim
@@ -61,5 +61,5 @@ spec:
       name: $PROJECT-log
   resources:
     requests:
-      storage: 3Gi
+      storage: 5Gi
   storageClassName: $PROJECT-log
