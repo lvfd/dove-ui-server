@@ -10,14 +10,14 @@ def dockerTag = dateFormat.format(new Date()) + "_${env.BUILD_ID}"
 //定义变量
 
 def git_address = "http://10.1.85.161:8888/lvfudi/dove-ui-server.git" 
-def git_auth = "d6bea97b-c053-4ec9-98c8-01f3ed427864"
+def git_auth = "8dccd9d7-19d6-47ab-87c5-4173a88c4661"
 //def git_branch = "${branch_name}"
 
 
 //Harbor私服地址
 def harbor_url = "10.1.85.22:1034"
 //Harbor的凭证
-def harbor_auth = "8daf1347-99f4-4549-add0-110291538002"
+def harbor_auth = "6b8facae-6afc-4818-a4e3-2e2a8b16432a"
 
 
 //构建版本的名称
