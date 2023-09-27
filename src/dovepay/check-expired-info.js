@@ -54,13 +54,14 @@ const cleanPwdRecord = (pwdtype) => {
 const bindSubmit = () => {
   try {
     const pattern = data()? data().pattern: null
+    const model = data()? data().model: null
     const merty = data()? data().merty: null
     const ctx = data()? data().ctx: null
     const userId = data()? data().userId: null
     if (!ctx || !userId) throw new Error(`缺少参数: ctx=${ctx}, userId=${userId}`)
     let src
     if ((pattern == 1 || pattern == 3) && merty == 1) {
-      src = `${ctx}/dovepayUserWebPayAction.do?m=pageRequestWithloguserid&functionName=individualUser/changeLoginPw&loguserid=${userId}`
+      src = `${ctx}/dovepayUserWebPayAction.do?m=pageRequestWithloguserid&functionName=individualUser/changeLoginPw&loguserid=${userId}&pattern=${pattern}`
       addListener('#shallRevise', src)
     }
     else if (pattern == 2 && merty == 1) {
@@ -72,14 +73,14 @@ const bindSubmit = () => {
       addListener('#shallRevise', src)
     }
     else if ((pattern == 1 || pattern == 3) && merty == 0) {
-      src = `${ctx}/dovepayUserWebPayAction.do?m=pageRequestWithloguserid&functionName=userController/toChangeLoginPw&loguserid=${userId}`
+      src = `${ctx}/dovepayUserWebPayAction.do?m=pageRequestWithloguserid&functionName=userController/toChangeLoginPw&loguserid=${userId}&pattern=${pattern}`
       addListener('#shallRevise', src)
     }
     else {
       src = `${ctx}/protected/userAction.do?m=paypwdPage`
       addListener('#shallRevise', src)
     }
-    const src1 = `${ctx}/dovepayUserWebPayAction.do?m=pageRequestWithloguserid&functionName=userController/updateEnterpriseInfoPre&loguserid=${userId}&uptype=licenseinfo`
+    const src1 = `${ctx}/dovepayUserWebPayAction.do?m=pageRequestWithloguserid&functionName=userController/updateEnterpriseInfoPre&loguserid=${userId}&uptype=licenseinfo&model=${model}`
     const src2 = `${ctx}/dovepayUserWebPayAction.do?m=pageRequestWithloguserid&functionName=userController/updateIndividualInfoPre&loguserid=${userId}&uptype=frinfo`
     const src3 = `${ctx}/dovepayUserWebPayAction.do?m=pageRequestWithloguserid&functionName=individualUser/updateIndividualInfoPre&loguserid=${userId}&uptype=idinfo`
     addListener('#shallRevise1', src1)
