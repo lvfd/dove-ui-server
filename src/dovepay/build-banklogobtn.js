@@ -20,7 +20,7 @@ function buildBankLogoButton(iframe) {
         }
         else {
           bankInfo.some(function(info) {
-            const reg = new RegExp(info.name)
+            const reg = new RegExp(info.name + '$')
             if (reg.test(span.getAttribute('class'))) {
               svgPath = info.logo
               return true
